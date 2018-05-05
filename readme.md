@@ -27,7 +27,7 @@ public class Model {
 @Query(value = "select m.type from model m where m.id = ?1", nativeQuery = true)
 Optional<ModelType> getOptionalModelTypeById_Native(Integer id);
 
-@Query("select m.status from Model m where m.id = ?1")
+@Query("select m.type from Model m where m.id = ?1")
 Optional<ModelType> getOptionalModelTypeById_Jpa(Integer id);
 
 ```
