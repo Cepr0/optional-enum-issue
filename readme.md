@@ -24,10 +24,10 @@ public class Model {
 
 ```java
 
-@Query(value = "select m.type from model m where m.id = ?1", nativeQuery = true)
+@Query(value = "select m.type as type from model m where m.id = ?1", nativeQuery = true)
 Optional<ModelType> getOptionalModelTypeById_Native(Integer id);
 
-@Query("select m.type from Model m where m.id = ?1")
+@Query("select m.type as type from Model m where m.id = ?1")
 Optional<ModelType> getOptionalModelTypeById_Jpa(Integer id);
 
 ```

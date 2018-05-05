@@ -6,11 +6,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class ModelRepoTest {
@@ -37,6 +39,20 @@ public class ModelRepoTest {
 	}
 
 	@Test
+	public void getOptionalWithTypeProjectionById_Native() {
+		Optional<WithTypeProjection> typeOptional = modelRepo.getOptionalWithTypeProjectionById_Native(1);
+		typeOptional.map(p -> assertThat(p.getType()).isOfAnyClassIn(ModelType.class))
+				.orElseThrow(RuntimeException::new);
+	}
+
+	@Test
+	public void getOptionalWithTypeProjectionById_Jpa() {
+		Optional<WithTypeProjection> typeOptional = modelRepo.getOptionalWithTypeProjectionById_Jpa(1);
+		typeOptional.map(p -> assertThat(p.getType()).isOfAnyClassIn(ModelType.class))
+				.orElseThrow(RuntimeException::new);
+	}
+
+	@Test
 	public void getModelTypeById_Native() {
 		ModelType type = modelRepo.getModelTypeById_Native(1);
 		assertThat(type).isNotNull();
@@ -48,5 +64,19 @@ public class ModelRepoTest {
 		ModelType type = modelRepo.getModelTypeById_Jpa(1);
 		assertThat(type).isNotNull();
 		assertThat(type).isOfAnyClassIn(ModelType.class);
+	}
+
+	@Test
+	public void getWithTypeProjectionById_Native() {
+		WithTypeProjection projection = modelRepo.getWithTypeProjectionById_Native(1);
+		assertThat(projection).isNotNull();
+		assertThat(projection.getType()).isOfAnyClassIn(ModelType.class);
+	}
+
+	@Test
+	public void getWithTypeProjectionById_Jpa() {
+		WithTypeProjection type = modelRepo.getWithTypeProjectionById_Jpa(1);
+		assertThat(type).isNotNull();
+		assertThat(type.getType()).isOfAnyClassIn(ModelType.class);
 	}
 }
