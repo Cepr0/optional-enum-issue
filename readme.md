@@ -24,11 +24,11 @@ public class Model {
 
 ```java
 
-@Query(value = "select m.status from model m where m.id = ?1", nativeQuery = true)
-Optional<ModelStatus> getOptionalModelStatusById_Native(Integer id);
+@Query(value = "select m.type from model m where m.id = ?1", nativeQuery = true)
+Optional<ModelType> getOptionalModelTypeById_Native(Integer id);
 
 @Query("select m.status from Model m where m.id = ?1")
-Optional<ModelStatus> getOptionalModelStatusById_Jpa(Integer id);
+Optional<ModelType> getOptionalModelTypeById_Jpa(Integer id);
 
 ```
 
