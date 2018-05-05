@@ -63,3 +63,5 @@ but was:
 ```
 
 Full tests are in `io.github.cepr0.demo.ModelRepoTest`.
+
+The issue [DATAJPA-1338](https://jira.spring.io/browse/DATAJPA-1338) is posted.
