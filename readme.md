@@ -1,30 +1,53 @@
-Spring Data JPA repository method, that should return Optional&lt;Enum&gt;, instead return Optional&lt;String&gt;. 
+Spring Data JPA repository method with native query, that should return **Optional&lt;Enum&gt;**, instead return **Optional&lt;String&gt;**. 
 
-Example:
+Spring Boot -  2.0.1
+
+Spring Data JPA - 2.0.6
+
+**Entity**
 
 ```java
 @Entity
-@TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
 public class Model {
-	@Id
+	
+	@Id 
 	private Integer id;
-
+	
 	private String name;
-
-	@Enumerated(STRING)
-	@Type(type = "pgsql_enum")
+	
+	@Enumerated(STRING) 
+	@Column(length = 8, nullable = false) 
 	private ModelType type;
-
-	@Enumerated(STRING)
-	private ModelStatus status;
 }
+```
+**Repo methods**
 
-	@Query(value = "select m.status from model m where m.id = ?1", nativeQuery = true)
-	Optional<ModelStatus> getOptionalModelStatusById_Native(Integer id);
+```java
 
-	@Query("select m.status from Model m where m.id = ?1")
-	Optional<ModelStatus> getOptionalModelStatusById_Jpa(Integer id);
+@Query(value = "select m.status from model m where m.id = ?1", nativeQuery = true)
+Optional<ModelStatus> getOptionalModelStatusById_Native(Integer id);
+
+@Query("select m.status from Model m where m.id = ?1")
+Optional<ModelStatus> getOptionalModelStatusById_Jpa(Integer id);
 
 ```
 
-Full tests see in `io.github.cepr0.demo.ModelRepoTest`.
+**Tests**
+
+```java
+@Test
+public void getOptionalModelTypeById_Native() {
+    Optional<ModelType> typeOptional = modelRepo.getOptionalModelTypeById_Native(1);
+    assertThat(typeOptional).isNotEmpty();
+    assertThat(typeOptional.get()).isOfAnyClassIn(ModelType.class);
+}
+
+@Test
+public void getOptionalModelTypeById_Jpa() {
+    Optional<ModelType> typeOptional = modelRepo.getOptionalModelTypeById_Jpa(1);
+    assertThat(typeOptional).isNotEmpty();
+    assertThat(typeOptional.get()).isOfAnyClassIn(ModelType.class);
+}
+```
+
+Full tests are in `io.github.cepr0.demo.ModelRepoTest`.

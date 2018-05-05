@@ -10,8 +10,6 @@ public interface ModelRepo extends JpaRepository<Model, Integer> {
 
 	String NATIVE_QUERY_TYPE = "select m.type from model m where m.id = ?1";
 	String JPQL_QUERY_TYPE = "select m.type from Model m where m.id = ?1";
-	String NATIVE_QUERY_STATUS = "select m.status from model m where m.id = ?1";
-	String JPQL_QUERY_STATUS = "select m.status from Model m where m.id = ?1";
 
 	@Query(value = NATIVE_QUERY_TYPE, nativeQuery = true)
 	Optional<ModelType> getOptionalModelTypeById_Native(Integer id);
@@ -24,19 +22,4 @@ public interface ModelRepo extends JpaRepository<Model, Integer> {
 
 	@Query(JPQL_QUERY_TYPE)
 	ModelType getModelTypeById_Jpa(Integer id);
-
-	/////////////////////////////
-
-	@Query(value = NATIVE_QUERY_STATUS, nativeQuery = true)
-	Optional<ModelStatus> getOptionalModelStatusById_Native(Integer id);
-
-	@Query(JPQL_QUERY_STATUS)
-	Optional<ModelStatus> getOptionalModelStatusById_Jpa(Integer id);
-
-	@Query(value = NATIVE_QUERY_STATUS, nativeQuery = true)
-	ModelStatus getModelStatusById_Native(Integer id);
-
-	@Query(JPQL_QUERY_STATUS)
-	ModelStatus getModelStatusById_Jpa(Integer id);
-
 }
