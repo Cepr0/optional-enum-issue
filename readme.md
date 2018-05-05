@@ -50,4 +50,16 @@ public void getOptionalModelTypeById_Jpa() {
 }
 ```
 
+Test result for `getOptionalModelTypeById_Native` method:
+ 
+```
+java.lang.AssertionError: 
+Expecting:
+ <"TYPE1">
+to be of one these types:
+ <[io.github.cepr0.demo.ModelType]>
+but was:
+ <java.lang.String>
+```
+
 Full tests are in `io.github.cepr0.demo.ModelRepoTest`.
